@@ -1,0 +1,633 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#070B0E">
+    <title>About — True or False: Mysteries &amp; Secrets</title>
+
+    <style>
+        :root {
+            --background: #070B0E;
+            --surface: #0E1A1D;
+            --surface-dark: #04070A;
+            --primary: #F2B84B;
+            --primary-light: #FFD98A;
+            --primary-dark: #A8761F;
+            --secondary: #5AD7C7;
+            --secondary-dark: #1F8F84;
+            --text: #F2EAD8;
+            --text-secondary: #B8B0A0;
+            --text-hint: #7F7A6E;
+            --border: rgba(242, 184, 75, 0.18);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            padding: 0;
+            color: var(--text);
+            background:
+                radial-gradient(ellipse at 12% 0%, rgba(242, 184, 75, 0.12), transparent 36%),
+                radial-gradient(ellipse at 100% 35%, rgba(31, 143, 132, 0.14), transparent 38%),
+                linear-gradient(160deg, #05080B, #0D1B1A 50%, #05080B);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            line-height: 1.65;
+        }
+
+        .container {
+            width: min(900px, calc(100% - 36px));
+            margin: 0 auto;
+            padding: 28px 0 40px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 28px;
+        }
+
+        .language-switch {
+            display: flex;
+            gap: 5px;
+            padding: 5px;
+            background: rgba(4, 7, 10, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .language-switch button {
+            border: 0;
+            border-radius: 8px;
+            padding: 8px 14px;
+            color: var(--text-secondary);
+            background: transparent;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .language-switch button.active {
+            color: #171006;
+            background: var(--primary);
+        }
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            padding: 38px 22px 40px;
+            background: linear-gradient(145deg, rgba(14, 26, 29, 0.96), rgba(4, 7, 10, 0.94));
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            box-shadow: 0 18px 55px rgba(0, 0, 0, 0.28);
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            top: -155px;
+            left: calc(50% - 125px);
+            background: var(--primary);
+            opacity: 0.15;
+            filter: blur(70px);
+            border-radius: 50%;
+        }
+
+        .hero-icon {
+            font-size: 60px;
+            line-height: 1.2;
+            margin-bottom: 17px;
+            filter: drop-shadow(0 0 20px rgba(242, 184, 75, 0.35));
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(27px, 5vw, 40px);
+            line-height: 1.2;
+            letter-spacing: -0.8px;
+            background: linear-gradient(90deg, #FFD98A, #F2B84B, #9AF2E4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            margin: 14px auto 0;
+            max-width: 650px;
+            font-size: 16px;
+        }
+
+        .content {
+            display: grid;
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .section {
+            padding: 24px;
+            background: rgba(14, 26, 29, 0.82);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+        }
+
+        h2 {
+            color: var(--primary);
+            font-size: 21px;
+            line-height: 1.35;
+            margin: 0 0 13px;
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin: 0 0 12px;
+        }
+
+        p:last-child {
+            margin-bottom: 0;
+        }
+
+        .feature-grid,
+        .mode-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 17px;
+        }
+
+        .feature,
+        .mode {
+            padding: 17px;
+            background: rgba(4, 7, 10, 0.65);
+            border: 1px solid rgba(242, 184, 75, 0.12);
+            border-radius: 14px;
+        }
+
+        .feature-icon,
+        .mode-icon {
+            font-size: 27px;
+            margin-bottom: 8px;
+        }
+
+        .feature h3,
+        .mode h3 {
+            margin: 0 0 6px;
+            color: var(--text);
+            font-size: 15px;
+        }
+
+        .feature p,
+        .mode p {
+            font-size: 13px;
+            line-height: 1.55;
+        }
+
+        .feature:nth-child(even) {
+            border-color: rgba(90, 215, 199, 0.15);
+        }
+
+        .mode.classic { border-left: 3px solid #F2B84B; }
+        .mode.time { border-left: 3px solid #5AD7C7; }
+        .mode.survival { border-left: 3px solid #FF7A59; }
+        .mode.perfect { border-left: 3px solid #FFD166; }
+        .mode.journey { border-left: 3px solid #8B7CF6; }
+
+        .highlight {
+            text-align: center;
+            padding: 27px 22px;
+            background: linear-gradient(120deg, rgba(181, 123, 36, 0.17), rgba(31, 111, 114, 0.17));
+            border: 1px solid rgba(242, 184, 75, 0.3);
+            border-radius: 18px;
+        }
+
+        .highlight h2 {
+            color: var(--primary-light);
+            margin-bottom: 9px;
+        }
+
+        .highlight p {
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        footer {
+            text-align: center;
+            padding: 26px 10px 0;
+            color: var(--text-hint);
+            font-size: 13px;
+        }
+
+        footer a {
+            color: var(--secondary);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        [data-lang] {
+            display: none;
+        }
+
+        [data-lang].visible {
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: calc(100% - 24px);
+                padding-top: 16px;
+            }
+
+            .hero {
+                padding: 29px 17px 32px;
+            }
+
+            .section {
+                padding: 20px 17px;
+            }
+
+            .feature-grid,
+            .mode-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h2 {
+                font-size: 19px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+    <div class="topbar">
+        <div class="language-switch">
+            <button id="enBtn" class="active" onclick="setLanguage('en')">EN</button>
+            <button id="ruBtn" onclick="setLanguage('ru')">RU</button>
+        </div>
+    </div>
+
+    <!-- ENGLISH -->
+    <div data-lang="en" class="visible">
+        <header class="hero">
+            <div class="hero-icon">🔍</div>
+            <h1>True or False: Mysteries &amp; Secrets</h1>
+            <p class="subtitle">
+                Explore the unexplained, question the unbelievable,
+                and uncover fascinating facts hidden behind the world's
+                greatest mysteries.
+            </p>
+        </header>
+
+        <main class="content">
+
+            <section class="section">
+                <h2>🗝️ About the Game</h2>
+                <p>
+                    <strong>True or False: Mysteries &amp; Secrets</strong> is
+                    an educational quiz for curious minds who love unexplained
+                    phenomena, fascinating mysteries, unusual discoveries,
+                    and stories that challenge what we think we know.
+                </p>
+                <p>
+                    Are all legends just fiction? Can strange phenomena
+                    really be explained by science? How much truth is hidden
+                    behind famous mysteries and historical secrets?
+                </p>
+                <p>
+                    Read each statement, decide whether it is true or false,
+                    and discover surprising explanations along the way.
+                </p>
+            </section>
+
+            <section class="section">
+                <h2>🌌 Enter the World of Mysteries</h2>
+                <p>
+                    Explore fascinating topics from the unexplained corners
+                    of history to the secrets of the natural world and space.
+                </p>
+
+                <div class="feature-grid">
+                    <div class="feature">
+                        <div class="feature-icon">🏛️</div>
+                        <h3>Historical Mysteries</h3>
+                        <p>Explore ancient civilizations, lost places, mysterious artifacts, and unanswered historical questions.</p>
+                    </div>
+
+                    <div class="feature">
+                        <div class="feature-icon">🛸</div>
+                        <h3>Unexplained Phenomena</h3>
+                        <p>Discover strange events, unusual sightings, and phenomena that continue to spark curiosity.</p>
+                    </div>
+
+                    <div class="feature">
+                        <div class="feature-icon">👻</div>
+                        <h3>Legends &amp; Myths</h3>
+                        <p>Separate popular legends, folklore, and supernatural stories from documented facts.</p>
+                    </div>
+
+                    <div class="feature">
+                        <div class="feature-icon">🔐</div>
+                        <h3>Secrets &amp; Hidden Codes</h3>
+                        <p>Learn about secret messages, mysterious symbols, lost documents, and hidden meanings.</p>
+                    </div>
+
+                    <div class="feature">
+                        <div class="feature-icon">🌊</div>
+                        <h3>Nature's Mysteries</h3>
+                        <p>Discover unusual animals, mysterious natural locations, and extraordinary events on Earth.</p>
+                    </div>
+
+                    <div class="feature">
+                        <div class="feature-icon">🌠</div>
+                        <h3>Space &amp; the Unknown</h3>
+                        <p>Explore cosmic mysteries, strange astronomical objects, and questions about the universe.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>🎮 Five Ways to Play</h2>
+                <p>
+                    Choose your challenge and test your knowledge.
+                    Every game mode offers a different way to investigate
+                    the truth.
+                </p>
+
+                <div class="mode-grid">
+                    <div class="mode classic">
+                        <div class="mode-icon">🎯</div>
+                        <h3>Classic</h3>
+                        <p>Answer a series of questions and see how many mysterious facts you can get right.</p>
+                    </div>
+
+                    <div class="mode time">
+                        <div class="mode-icon">⏱️</div>
+                        <h3>Time Challenge</h3>
+                        <p>Make quick decisions before the timer runs out. Trust your knowledge and instincts!</p>
+                    </div>
+
+                    <div class="mode journey">
+                        <div class="mode-icon">🧭</div>
+                        <h3>Journey</h3>
+                        <p>Move forward through a sequence of questions and challenges, uncovering new facts along the way.</p>
+                    </div>
+
+                    <div class="mode perfect">
+                        <div class="mode-icon">💎</div>
+                        <h3>Perfect</h3>
+                        <p>One mistake ends the game. Can you uncover the truth without a single wrong answer?</p>
+                    </div>
+
+                    <div class="mode survival">
+                        <div class="mode-icon">❤️</div>
+                        <h3>Survival</h3>
+                        <p>You have a limited number of lives. How many mysteries can you solve before they run out?</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>🧠 Question Everything</h2>
+                <p>
+                    Not everything that sounds unbelievable is false,
+                    and not every popular story is true.
+                </p>
+                <p>
+                    Learn to distinguish evidence from speculation,
+                    discover the science behind unusual phenomena,
+                    and explore the fascinating stories that make
+                    our world so mysterious.
+                </p>
+                <p>
+                    Every question is an opportunity to learn something
+                    unexpected.
+                </p>
+            </section>
+
+            <section class="highlight">
+                <h2>✨ Ready to Uncover the Truth?</h2>
+                <p>
+                    Challenge your assumptions, explore the unknown,
+                    and discover how much you really know.
+                    Some secrets are stranger than fiction!
+                </p>
+            </section>
+
+        </main>
+
+        <footer>
+            <p>Made with curiosity by ABVSoft</p>
+            <p>Questions or feedback? <a href="mailto:abvsoft.apps@gmail.com">Contact us</a></p>
+            <p>© 2026 ABVSoft. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- RUSSIAN -->
+    <div data-lang="ru">
+        <header class="hero">
+            <div class="hero-icon">🔍</div>
+            <h1>Правда или ложь: Тайны и загадки</h1>
+            <p class="subtitle">
+                Исследуй необъяснимое, сомневайся в невероятном
+                и раскрывай удивительные факты, скрытые за величайшими
+                загадками мира.
+            </p>
+        </header>
+
+        <main class="content">
+
+            <section class="section">
+                <h2>🗝️ Об игре</h2>
+                <p>
+                    <strong>«Правда или ложь: Тайны и загадки»</strong> —
+                    познавательная викторина для любознательных людей,
+                    которым интересны необъяснимые явления, загадочные
+                    открытия и истории, заставляющие усомниться
+                    в привычной картине мира.
+                </p>
+                <p>
+                    Все ли легенды — выдумка? Можно ли объяснить странные
+                    явления с помощью науки? Сколько правды скрывается
+                    за известными тайнами и историческими загадками?
+                </p>
+                <p>
+                    Читай утверждения, решай, правда это или ложь,
+                    и открывай удивительные объяснения.
+                </p>
+            </section>
+
+            <section class="section">
+                <h2>🌌 Открой мир загадок</h2>
+                <p>
+                    Исследуй удивительные темы — от неразгаданных
+                    страниц истории до тайн природы и космоса.
+                </p>
+
+                <div class="feature-grid">
+                    <div class="feature">
+                        <div class="feature-icon">🏛️</div>
+                        <h3>Исторические загадки</h3>
+                        <p>Исследуй древние цивилизации, исчезнувшие места, загадочные артефакты и тайны прошлого.</p>
+                    </div>
+
+                    <div class="feature">
+                        <div class="feature-icon">🛸</div>
+                        <h3>Необъяснимые явления</h3>
+                        <p>Узнавай о странных событиях, необычных наблюдениях и явлениях, которые продолжают будоражить воображение.</p>
+                    </div>
+
+                    <div class="feature">
+                        <div class="feature-icon">👻</div>
+                        <h3>Легенды и мифы</h3>
+                        <p>Отделяй известные легенды, фольклор и сверхъестественные истории от подтверждённых фактов.</p>
+                    </div>
+
+                    <div class="feature">
+                        <div class="feature-icon">🔐</div>
+                        <h3>Тайны и скрытые послания</h3>
+                        <p>Знакомься с тайными посланиями, загадочными символами, исчезнувшими документами и скрытыми смыслами.</p>
+                    </div>
+
+                    <div class="feature">
+                        <div class="feature-icon">🌊</div>
+                        <h3>Загадки природы</h3>
+                        <p>Открывай необычных животных, загадочные места и удивительные природные явления на Земле.</p>
+                    </div>
+
+                    <div class="feature">
+                        <div class="feature-icon">🌠</div>
+                        <h3>Космос и неизведанное</h3>
+                        <p>Исследуй космические загадки, необычные астрономические объекты и вопросы о Вселенной.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>🎮 Пять игровых режимов</h2>
+                <p>
+                    Выбирай испытание и проверяй свои знания.
+                    Каждый режим предлагает свой способ докопаться до истины.
+                </p>
+
+                <div class="mode-grid">
+                    <div class="mode classic">
+                        <div class="mode-icon">🎯</div>
+                        <h3>Классический</h3>
+                        <p>Отвечай на вопросы и узнай, сколько загадочных фактов ты сможешь определить правильно.</p>
+                    </div>
+
+                    <div class="mode time">
+                        <div class="mode-icon">⏱️</div>
+                        <h3>На время</h3>
+                        <p>Принимай решения до того, как закончится таймер. Доверься своим знаниям и интуиции!</p>
+                    </div>
+
+                    <div class="mode journey">
+                        <div class="mode-icon">🧭</div>
+                        <h3>Путешествие</h3>
+                        <p>Продвигайся вперёд через последовательность вопросов и испытаний, открывая новые факты.</p>
+                    </div>
+
+                    <div class="mode perfect">
+                        <div class="mode-icon">💎</div>
+                        <h3>Идеальный</h3>
+                        <p>Одна ошибка — и игра окончена. Сможешь раскрыть правду, не допустив ни одной ошибки?</p>
+                    </div>
+
+                    <div class="mode survival">
+                        <div class="mode-icon">❤️</div>
+                        <h3>Выживание</h3>
+                        <p>У тебя ограниченное количество жизней. Сколько загадок ты успеешь разгадать?</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>🧠 Сомневайся во всём</h2>
+                <p>
+                    Не всё невероятное оказывается ложью,
+                    а не каждая известная история является правдой.
+                </p>
+                <p>
+                    Учись отличать доказательства от предположений,
+                    узнавай научные объяснения необычных явлений
+                    и исследуй удивительные истории, которые делают
+                    наш мир таким загадочным.
+                </p>
+                <p>
+                    Каждый вопрос — возможность узнать что-то неожиданное.
+                </p>
+            </section>
+
+            <section class="highlight">
+                <h2>✨ Готов раскрыть правду?</h2>
+                <p>
+                    Проверь свои представления, загляни в неизведанное
+                    и узнай, насколько хорошо ты разбираешься в тайнах мира.
+                    Иногда правда удивительнее вымысла!
+                </p>
+            </section>
+
+        </main>
+
+        <footer>
+            <p>Создано с любознательностью командой ABVSoft</p>
+            <p>Есть вопросы или предложения? <a href="mailto:abvsoft.apps@gmail.com">Свяжитесь с нами</a></p>
+            <p>© 2026 ABVSoft. Все права защищены.</p>
+        </footer>
+    </div>
+
+</div>
+
+<script>
+    function setLanguage(language) {
+        document.querySelectorAll('[data-lang]').forEach(element => {
+            element.classList.toggle('visible', element.dataset.lang === language);
+        });
+
+        document.getElementById('enBtn').classList.toggle('active', language === 'en');
+        document.getElementById('ruBtn').classList.toggle('active', language === 'ru');
+
+        document.documentElement.lang = language;
+
+        try {
+            localStorage.setItem('mysteriesSecretsAboutLanguage', language);
+        } catch (e) {
+            // Language selection still works without localStorage.
+        }
+    }
+
+    (function initLanguage() {
+        let language = 'en';
+
+        try {
+            const saved = localStorage.getItem('mysteriesSecretsAboutLanguage');
+
+            if (saved === 'en' || saved === 'ru') {
+                language = saved;
+            } else {
+                language = navigator.language?.toLowerCase().startsWith('ru') ? 'ru' : 'en';
+            }
+        } catch (e) {
+            language = navigator.language?.toLowerCase().startsWith('ru') ? 'ru' : 'en';
+        }
+
+        setLanguage(language);
+    })();
+</script>
+</body>
+</html>
+```
